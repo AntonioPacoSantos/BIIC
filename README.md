@@ -1,5 +1,5 @@
 # BIIC
-Traductor de Godley Tables a archivos .mo (OpenModelica) 
+## Traductor de Godley Tables a archivos .mo (OpenModelica) 
 
 Convenciones: 
 
@@ -10,3 +10,7 @@ Convenciones:
 3. Siempre, la tercera fila, inicia con "Starting Conditions"
 
 4. No se puede dejar un espacio en blanco (para una posición ij, poner 0 si el Flow de la fila i no afecta al Stock de la columna j)
+
+## Dos modelos basados en agentes implementados en OpenModelica 
+
+## Visualización de una red de interacciones entre bancos y firmas con manim 
