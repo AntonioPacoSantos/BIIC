@@ -1,0 +1,5 @@
+Stock type,Asset,Liability,Liability
+Stock name, Bank, Firms, Workers
+Initial Conditions,6,7,8
+Loan,-4, 3*2,0
+Salary,q, -2/q, Cosa+  Coso

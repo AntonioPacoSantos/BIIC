@@ -1,0 +1,7 @@
+Stock type,Asset,Asset,Asset
+Stock name,Households,Production,Government
+Initial Conditions,0,0,0
+Consumption,-Cd,Cs,0
+Gov expenditures,0,Gs,-Gd
+Wages,WNs,-WNd,0
+Taxes,-Ts,0,Td

@@ -1,0 +1,9 @@
+Stock type,Asset,Liability,Liability,Equity
+Stock name, Loans,Firms,Workers,Equity
+Initial Conditions,110,90,10,10
+Firm borrowing,Lend_F,Lend_F,0,0
+Interest payments,0,-Interest_F,0,Interest_F
+Debt repayment,-Repay_F,-Repay_F,0,0
+Hire workers,0,-Wages,Wages,0
+Workers consume,0,Consume_W,-Consume_W,0
+Bank purchases,0,Buy_B,0,-Buy_B

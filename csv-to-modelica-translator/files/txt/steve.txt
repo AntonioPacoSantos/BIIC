@@ -1,0 +1,14 @@
+Stock type,Asset,Asset,Asset,Asset,Asset
+Stock name,Vault,Loans,Firms,Worker,Safe
+Initial Conditions,100,0,0,0,0
+Lend,-A,0,A,0,0
+Record Loan,0,A,0,0,0
+Compound,0,B,0,0,0
+Pay Interest,0,0,-B,0,B
+Record Payment,0,-B,0,0,0
+Deposit Interest,0,0,C,0,-C
+Wages,0,0,-D,D,0
+Consume,0,0,E,-E,0
+Consume(2),0,0,F,0,-F
+Repay,G,0,-G,0,0
+Record Repay,0,-G,0,0,0

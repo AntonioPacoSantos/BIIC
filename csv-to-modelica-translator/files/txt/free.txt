@@ -1,0 +1,9 @@
+Stock type,Asset,Asset,Asset,Asset
+Stock name,Vault,Loans,Firms,Safe
+Initial Conditions,99,0,0,0
+Lend from Vault,-Loan,0,Loan,0
+Record Loan,0,Loan,0,0
+Charge Interest,0,IntLoan,0,0
+Pay Interest,0,0,-IntLoan,IntLoan
+Record Interest Payment,0,-IntLoan,0,0
+Pay Interest(2),0,0,FirmInt,-FirmInt

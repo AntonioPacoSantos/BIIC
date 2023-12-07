@@ -1,0 +1,23 @@
+Stock type,Asset,Asset,Asset,Asset,Asset,Asset,Asset,Asset,Asset,Asset,Asset
+Stock name,BC,BPL,FL,FD,WD,N,a,Kr,PC,W,λ
+Initial Conditions,0,0,0,0,0,300,1,900,1.25,1,0
+Compound Debt,0,0,A,0,0,0,0,0,0,0,0
+Service Debt,0,B,0,-B,0,0,0,0,0,0,0
+Record Servicing,0,0,-B,0,0,0,0,0,0,0,0
+Debt-financed investment,0,0,C,0,0,0,0,0,0,0,0
+Debt-financed investment(2),0,0,0,C,0,0,0,0,0,0,0
+Wages,0,0,0,-D,D,0,0,0,0,0,0
+Interest Firms,0,-E,0,E,0,0,0,0,0,0,0
+Interest Workers,0,-F,0,0,F,0,0,0,0,0,0
+Consumption Banks,0,-G,0,G,0,0,0,0,0,0,0
+Consumption Workers,0,0,0,H,-H,0,0,0,0,0,0
+Debt repayment,I,0,0,-I,0,0,0,0,0,0,0
+Record repayment,0,0,-I,0,0,0,0,0,0,0,0
+Lend from Capital,-J,0,0,J,0,0,0,0,0,0,0
+Record Loan,0,0,J,0,0,0,0,0,0,0,0
+Employment rate ODE,0,0,0,0,0,0,0,0,0,0,ode_λ
+Wage ODE,0,0,0,0,0,0,0,0,0,ode_W,0
+Price ODE,0,0,0,0,0,0,0,0,ode_PC,0,0
+Real Capital ODE,0,0,0,0,0,0,0,ode_Kr,0,0,0
+Productivity ODE,0,0,0,0,0,0,ode_a,0,0,0,0
+Population ODE,0,0,0,0,0,ode_N,0,0,0,0,0

@@ -1,0 +1,12 @@
+Stock type,Asset,Liability,Liability,Liability,Equity
+Stock name,Reserves,Impatient,Patient,Workers,Bank_E
+Initial Conditions,200,40,140,2,18
+Lend Money,0,Lend,-Lend,0,0
+Pay Interest,0,-Interest,Interest,0,0
+Repay Loans,0,-Repay,Repay,0,0
+Pay Bank Fee,0,-Fee,0,0,Fee
+Pay Wages,0,-Wages,0,Wages,0
+Pay Dividends,0,-Dividends,Dividends,0,0
+Capitalists consume,0,Consume_C,-Consume_C,0,0
+Workers consume,0,Consume_W,0,-Consume_W,0
+Bankers consume,0,Consume_B,0,0,-Consume_B

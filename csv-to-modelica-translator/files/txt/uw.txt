@@ -1,0 +1,11 @@
+Stock type,Asset,Asset,Asset,Asset,Asset
+Stock name,Firms,Loans,Safe,Vault,Workers
+Initial Conditions,0,0,0,100,0
+Lend,A,0,-A,0,0
+Record Loan,0,A,0,0,0
+Compound Debt,0,B,0,0,0
+Servicing Debt,-B,0,0,0,0
+Record Servicing,0,-B,0,0,0
+Wage,-C,0,0,0,C
+Consumption,D,0,0,0,-D
+Consumption(2),E,0,-E,0,0

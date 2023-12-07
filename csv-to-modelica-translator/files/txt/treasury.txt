@@ -1,0 +1,8 @@
+Stock type,Asset,Liability,Liability,Equity
+Stock name,Treasury,TBonds_B,Loans_CBT,Treasury_E
+Initial Conditions,0,294,486,-780
+Government Spending,-Spend,0,0,-Spend
+Government Taxation,Tax,-0,0,Tax
+Sell TBonds to Banks,Bonds_B,Bonds_B,0,0
+Interest on TBonds,-Int_BB,-0,0,-Int_BB
+Borrow interest from CB,Loant_Int,0,Loant_Int,0
