@@ -27,7 +27,9 @@ package GK_Model
     //interest payments
     Riccetti_model financial_system;
     parameter Real s_GK = 3, alfa_GK = 0.025, beta_GK = 0.015, deltaK_GK = 0.1, tau_GK = 0.6, rho_GK = 10;
+    //parameter Real s_GK = 300, alfa_GK = 0.00025, beta_GK = 0.00015, deltaK_GK = 0.001, tau_GK = 0.006, rho_GK = 0.1;
     parameter Real lambda_GK = 10, mu_GK = 0.04, i_GK = 0.04;
+    //parameter Real lambda_GK = 0.1, mu_GK = 0.0004, i_GK = 0.0004;
     //Traduccion Keen-->notacion nuestra
     //v->s;omega->v;lambda->e;Slambda->rho;Zlambda->tau
     //s: capital-output ratio K/Y
@@ -60,10 +62,11 @@ package GK_Model
     omega_GK = lambda_GK*(profitRate_GK - mu_GK);
     Ig_GK = Y_GK*omega_GK;
     //der(D_GK) = Ig_GK - Pi_GK;
+    //D_GK = financial_system.AggregateBFirms;
     D_GK = financial_system.AggregateBFirms;
     Int_GK = i_GK*D_GK;
     annotation(
-      experiment(StartTime = 0, StopTime = 10000, Tolerance = 1e-06, Interval = 20));
+      experiment(StartTime = 0, StopTime = 1000, Tolerance = 1e-12, Interval = 2));
   end GK3Debt;
 
   model Riccetti_model
