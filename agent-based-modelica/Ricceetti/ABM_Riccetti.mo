@@ -120,6 +120,7 @@ package ABM_Riccetti
     outer Integer delayFirm;
     outer Integer Z; 
     
+    Integer bankWithBestInterest; 
       
     //random number generations
     parameter Integer randomFirmValue(start = 0, fixed = false);
@@ -157,8 +158,9 @@ package ABM_Riccetti
   
     when sample(delayFirm, 10) then
       currentR = R[chosenBank, firmId];
-      probability_of_change = 1 - Modelica.Math.exp(lambda*(R[select_min_value_index_from_rows(min({L,L2}),max({L,L2}),R[:, firmId]),firmId] - pre(currentR))/R[select_min_value_index_from_rows(min({L,L2}),max({L,L2}),R[:, firmId]),firmId]);
-  
+      bankWithBestInterest = select_min_value_index_from_rows(min({L,L2}),max({L,L2}),R[:, firmId]);
+      probability_of_change = 1 - Modelica.Math.exp(lambda*(R[bankWithBestInterest,firmId] - pre(currentR))/R[bankWithBestInterest,firmId]);
+      
       
       
       if pre(A) + pre(Pr) < 0 then 
@@ -170,9 +172,9 @@ package ABM_Riccetti
         RR = max({0,-(pre(A)+pre(Pr))});
         Y = 0; 
       else 
-        if R[select_min_value_index_from_rows(min({L,L2}),max({L,L2}),R[:, firmId]), firmId] < pre(currentR) then
+        if R[bankWithBestInterest , firmId] < pre(currentR) then
           if U < probability_of_change then
-          chosenBank = select_min_value_index_from_rows(min({L,L2}),max({L,L2}),R[:, firmId]);
+          chosenBank = bankWithBestInterest ;
           else
             chosenBank = pre(chosenBank);
           end if;

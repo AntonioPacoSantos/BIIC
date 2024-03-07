@@ -14,13 +14,16 @@ model BertrandEdgeworthModel
   //firmas
   output Real[N] Z(start = {0 for i in 1:N});
   //cantidades vendidas
+
 initial equation
   for i in 1:N loop
     F[i].p = P[i];
   end for;
+  
 equation
   when sample(1, 10) then
-    Z = buyingProcess(P,N,M,y);
+    //Z = buyingProcess(N);
+    Z = buyingProcess(N,M,y);
     for i in 1:N loop 
       F[i].z = Z[i]; 
     end for; 
@@ -32,37 +35,6 @@ equation
   annotation(
     experiment(StartTime = 0, StopTime = 100, Tolerance = 1e-06, Interval = 0.2));
 end BertrandEdgeworthModel;
-function buyingProcess
-  input Real[:] P; 
-  input Integer N; 
-  input Real M; 
-  input Real y; 
-  output Real[:] Z; 
-  protected Real tempSpent; 
-  protected Real tempMinPrice; 
-  protected Real tempFirmChosen; 
-  
-algorithm
-    Z := {0 for i in 1:N}; 
-    tempSpent := M; 
-    tempMinPrice := max(P); 
-    while tempSpent > 0 loop 
-      tempFirmChosen := N + 1; 
-      for i in 1:N loop 
-        if P[i] <= tempMinPrice and Z[i] <= y and tempSpent - P[i] >= 0 then 
-          tempMinPrice := P[i]; 
-          tempFirmChosen := i; 
-        end if; 
-      end for; 
-      if tempFirmChosen == N + 1 then 
-        break;
-      else 
-        tempSpent := tempSpent - tempMinPrice; 
-        Z[tempFirmChosen] := Z[tempFirmChosen] + 1; 
-      end if; 
-    end while;
-
-end buyingProcess;
 model Firms
   outer parameter Real y; //capacidad máxima
   outer parameter Real c; //costo marginal unitario
@@ -83,5 +55,43 @@ equation
   end when; 
   
 end Firms;
+  
+  function buyingProcess
+    //input Real[:] P;
+    input Integer N; 
+    input Real M; 
+    input Real y; 
+    output Real[:] X; 
+    protected Real tempSpent; 
+    protected Real tempMinPrice; 
+    protected Real tempFirmChosen; 
+    
+    
+    
+   
+  algorithm 
+      X := {0 for i in 1:N}; 
+      
+      
+      tempSpent := M; 
+      tempMinPrice := max(P); 
+      while tempSpent > 0 loop 
+        tempFirmChosen := N + 1; 
+        for i in 1:N loop 
+          if P[i] <= tempMinPrice and X[i] <= y and tempSpent - P[i] >= 0 then 
+            tempMinPrice := P[i]; 
+            tempFirmChosen := i; 
+          end if; 
+        end for; 
+        if tempFirmChosen == N + 1 then 
+          break;
+        else 
+          tempSpent := tempSpent - tempMinPrice; 
+          X[tempFirmChosen] := X[tempFirmChosen] + 1; 
+        end if; 
+      end while;
+      
+  
+  end buyingProcess;
 
 end BertrandEdgeworth;
