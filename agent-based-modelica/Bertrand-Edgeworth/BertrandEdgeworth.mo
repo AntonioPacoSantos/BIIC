@@ -8,11 +8,11 @@ model BertrandEdgeworthModel
   //costo marginal unitario
   inner parameter Real y = 10;
   //oferta
-  output Real[N] P(start = {i for i in 1:N});
+  Real[N] P(start = {i for i in 1:N});
   //precios
   Firms[N] F;
   //firmas
-  output Real[N] Z(start = {0 for i in 1:N});
+  Real[N] Z(start = {0 for i in 1:N});
   //cantidades vendidas
 
 initial equation
@@ -23,7 +23,7 @@ initial equation
 equation
   when sample(1, 10) then
     //Z = buyingProcess(N);
-    Z = buyingProcess(N,M,y);
+    Z = buyingProcess(P,N,M,y);
     for i in 1:N loop 
       F[i].z = Z[i]; 
     end for; 
@@ -57,7 +57,7 @@ equation
 end Firms;
   
   function buyingProcess
-    //input Real[:] P;
+    input Real[:] P;
     input Integer N; 
     input Real M; 
     input Real y; 
