@@ -1,5 +1,5 @@
 model Monte_Carlo_Simulation
-parameter Integer iterations = 1; 
+parameter Integer iterations = 4; 
 ABM_Riccetti.Riccetti_model[iterations] simulations;  
 Real Y(start = 0); 
 initial algorithm 

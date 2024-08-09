@@ -3,9 +3,9 @@ package ABM_Riccetti
     //parameter setting the seed for the monte carlo iteration
     parameter Integer i(start = 1, fixed=false);
     //number of firms
-    inner parameter Integer N = 50;
+    inner parameter Integer N = 100;
     //number of banks
-    inner parameter Integer Z = 5;
+    inner parameter Integer Z = 10;
     //a matrix defining each rate of interest (at position ij is the interest rate of the i-th Bank to the j-th Firm)
     inner Real[Z, N] R(start = {{0 for i in 1:N} for i in 1:Z});
     //a matrix defining the chosen bank for each firm (position ij = 1 if j-th Firm chose i-th Bank)
@@ -78,15 +78,12 @@ package ABM_Riccetti
     
     algorithm
     when sample(9,10) then 
-    AggregateY:= 0; 
-      for firm_index in 1:N loop 
-        AggregateY:=AggregateY+ Firms[firm_index].Y; 
-      end for; 
+      AggregateY:= sum({Firms[i].Y for i in 1:N}); 
       AggregateABanks := sum({Banks[i].A for i in 1:Z});
       AggregateAFirms:= sum(firmsNetWorth);
       AggregatePrBanks := sum({Banks[i].Pr for i in 1:Z});
-      AggregatePrFirms := sum({Firms[i].Pr for i in 1:Z});
-      AggregateBFirms := sum({Firms[i].B for i in 1:Z});
+      AggregatePrFirms := sum({Firms[i].Pr for i in 1:N});
+      AggregateBFirms := sum({Firms[i].B for i in 1:N});
     end when;      
     annotation(
       experiment(StartTime = 0, StopTime = 10000, Tolerance = 1e-06, Interval = 20),
@@ -98,7 +95,7 @@ package ABM_Riccetti
     parameter Real phi = 3;
     parameter Real beta = 0.7;
     parameter Integer firmId(fixed = false);
-    parameter Real adj = 0.05; //Biggest acceptable change for leverage value
+    parameter Real adj = 0.1;//Biggest acceptable change for leverage value
     parameter Real alpha = 0.1; //p mean
     parameter Real var_p = 0.4; //p variance
     parameter Real lambda = 4;
@@ -164,15 +161,13 @@ package ABM_Riccetti
       if pre(A) + pre(Pr) < 0 then 
         chosenBank = L;
         A = U*2;
-        Pr = 0; 
         leverage = 1; 
         isBroken = true;
-        RR = max({0,-(pre(A)+pre(Pr))});
-        Y = 0; 
+        RR = max({0,-(pre(A)+pre(Pr))}); 
       else 
         if R[select_min_value_index_from_rows(min({L,L2}),max({L,L2}),R[:, firmId]), firmId] < pre(currentR) then
           if U < probability_of_change then
-          chosenBank = select_min_value_index_from_rows(min({L,L2}),max({L,L2}),R[:, firmId]);
+            chosenBank = select_min_value_index_from_rows(min({L,L2}),max({L,L2}),R[:, firmId]);
           else
             chosenBank = pre(chosenBank);
           end if;
@@ -187,13 +182,13 @@ package ABM_Riccetti
         end if;
         isBroken = false;   
         RR = 0; 
-        Pr = p*Y - R[chosenBank, firmId]*B; 
-        Y = phi*K^beta;
       end if;
+      Pr = p*Y - R[chosenBank, firmId]*B; 
       u = U;
-      p = alpha + sqrt(var_p)*(sqrt(12))*(U - 0.5);
+      p = Modelica.Math.Distributions.Normal.quantile(u=u,mu=alpha,sigma=var_p); 
       K = B + A;
       B = A*leverage;
+      Y = phi*K^beta;
     end when;
     annotation(
       experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-6, Interval = 0.002),
@@ -205,12 +200,14 @@ package ABM_Riccetti
     //Provided interest rates
     outer parameter Integer N; 
     output Real[N] R_B;
-    parameter Real policy_rate = 0.002;
+    //parameter Real policy_rate = 0.002;
+    //alternativo:
+    parameter Real policy_rate = 0.02; 
     parameter Real gamma = 0.02;  
     parameter Integer bankId(fixed = false);
     
     Real interests;       
-    output Real bad;            //parte
+    output Real bad;            //"bad" debt from banks
     output Real D;  //Depositos
     output Real A(start = 10);    //net worth
     output Real Pr(start = 0); 
@@ -257,7 +254,7 @@ package ABM_Riccetti
         R_B[i] = policy_rate + gamma*A^(-gamma) + gamma*(firmsLeverage[i]/(1 + (firmsNetWorth[i]/max(firmsNetWorth))));
       end for;
       
-      D = sum_all_true_valued_elements(Phi[bankId],firmsLoans) - A;
+      D = max({0,sum_all_true_valued_elements(not brokenFirms and Phi[bankId],firmsLoans) - A});
       bad = sum_all_true_valued_elements(brokenFirms and Phi[bankId],firmsRR);
       interests = sum_all_true_valued_elements(Phi[bankId],hadamard_product (R_B,firmsLoans));
       Pr = interests - policy_rate*D - c* A - bad; 
